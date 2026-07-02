@@ -5,17 +5,11 @@ from torchvision import transforms, models
 from PIL import Image
 import time
 import os
-from save_img import save
 
 st.set_page_config(page_title="Spot the Fake Photo", layout="centered")
 
 st.title("Live Recapture Detector")
 st.write("Aim your camera at a real object or a digital screen.")
-
-# Consent (default = False)
-allow_collection = st.checkbox(
-    "I consent to this image being stored anonymously for improving the model."
-)
 
 @st.cache_resource
 def load_model():
@@ -68,9 +62,6 @@ if img_file_buffer is not None:
     latency_ms = (time.time() - start_time) * 1000
 
     is_fake = screen_prob >= 0.5
-
-    if allow_collection:
-        save(img, is_fake)
 
     st.markdown("### Result:")
 
